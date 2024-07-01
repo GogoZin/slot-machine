@@ -5,11 +5,52 @@ body {
     height: 100vh;
     margin: 0;
     background-color: #f0f0f0;
+    background-image: url("image/bg.jpeg");
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+:root {
+    --neon-text-light: rgba(255,255,255, .25);
+    --neon-text-color: #04f;
+    --neon-text-stroke: #4CF1FF;
+  }
+
+h1{
+	position: relative;
+	z-index: 2;
+	width: 100%;
+	margin: 0;
+	padding-bottom: 0.1em;
+	color: #FEFCFF;
+	font-size: 12vw;
+	font-family: 'Jura', sans-serif;
+	line-height: 1;
+	text-shadow: 
+		-0.2rem -0.2rem 1rem var(--neon-text-light),
+		0.2rem 0.2rem 1rem var(--neon-text-light),
+		0 0 2rem var(--neon-text-color),
+		0 0 4rem var(--neon-text-color),
+		0 0 6rem var(--neon-text-color),
+		0 0 8rem var(--neon-text-color),
+		0 0 10rem var(--neon-text-color);
+}
+
+.title {
+    font-size: 24px;
+    text-align: center;
+    margin-top: 20px; 
+    margin-bottom: 30px;
+}
+
+.header {
+    text-align: center; /* 文字置中對齊 */
+    margin-bottom: 20px; /* 上方間距 */
 }
 
 .slot-machine {
     display: flex;
-    flex-direction: column; /* 确保每一排是竖直排列 */
+    flex-direction: column; /* 每一排都是豎直排列 */
     align-items: center;
 }
 
@@ -20,15 +61,18 @@ body {
 }
 
 .slot {
-    width: 80px; /* 调整每个格子的宽度 */
-    height: 80px; /* 调整每个格子的高度 */
-    border: 1px solid black;
-    margin: 5px; /* 调整每个格子之间的间距 */
+    width: 80px; /* 調整格子寬度 */
+    height: 80px; /* 調整格子高度 */
+    border: 2px solid black; /* 調整邊框寬度 */
+    margin: -1px; /* 調整負邊距來抵消邊框 */
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 20px; /* 调整格子中内容的字体大小 */
+    font-size: 20px; /* 調整圖示大小 */
     transition: background-color 0.3s ease;
+    box-sizing: border-box; /* 元素寬度包含邊框和內邊距 */
+    background-color: #f0f0f0; /* 預設背景色 */
+    background-image: linear-gradient(to bottom right, #cccccc, #f2f2f2);
 }
 
 button {
@@ -42,10 +86,53 @@ button {
 }
 
 @keyframes blink {
+    0% {
+        background-image: linear-gradient(to top left, yellow, #f2f2f2);
+    }
+
+    25% {
+        background-image: linear-gradient(to top right, yellow, #f2f2f2);
+    }
+
+    50% {
+        background-image: linear-gradient(to bottom right, yellow, #f2f2f2);
+    }
+
+    75% {
+        background-image: linear-gradient(to bottom left, yellow, #f2f2f2);
+    }
+
+    100% {
+        background-image: linear-gradient(to top left, yellow, #f2f2f2);
+    }
+}
+
+@keyframes blink-border {
     from {
-        background-color: yellow;
+        border-color: yellow;
     }
     to {
-        background-color: transparent;
+        border-color: transparent;
     }
+}
+
+.overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.8);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#startButton {
+    font-size: 24px;
+    padding: 20px 40px;
+    background-color: #fff;
+    border: none;
+    cursor: pointer;
+    border-radius: 10px;
 }

@@ -1,16 +1,41 @@
 const symbols = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎'];
-const numRows = 3; // 總行數
-const numCols = 5; // 每行格子數
+const numRows = 4; // 總行數
+const numCols = 6; // 每行格子數
 let spinning = false; // 控制是否正在進行動畫
+const noWinSound = new Audio('audio/loss.mp3');
+noWinSound.volume = 1;
+const winSound = new Audio('audio/win.mp3');
+winSound.volume = 1;
+const spinSound = new Audio('audio/spinner.mp3');
+spinSound.volume = 0.6;
+
+document.getElementById('startButton').addEventListener('click', () => {
+    document.getElementById('overlay').style.display = 'none';
+    document.getElementById('backgroundMusic').volume = 0.5;
+    document.getElementById('backgroundMusic').play();
+});
 
 function spin() {
     if (spinning) {
         return; // 如果正在進行動畫，直接返回，避免重複觸發
     }
+
+    noWinSound.pause(); // 停止
+    noWinSound.currentTime = 0;
+    spinSound.play();
+
     spinning = true; // 設置為正在進行動畫
 
     const slots = document.querySelectorAll('.slot');
     clearWinningSlots(); // 清除之前的中獎閃爍效果
+
+    const backgroundMusic = document.getElementById('backgroundMusic');
+    if (backgroundMusic.paused) {
+        backgroundMusic.play().catch(error => {
+            console.error('音樂播放失敗:', error);
+        });
+    }
+
     let animationInterval = setInterval(() => {
         let tempResults = [];
         slots.forEach(slot => {
@@ -29,6 +54,8 @@ function spin() {
         });
         updateSlots(finalResults);
         setTimeout(() => {
+            spinSound.pause(); // 停止旋轉音效
+            spinSound.currentTime = 0; // 重設旋轉音效
             checkWin(finalResults); // 在顯示最終結果後，檢查中獎
             spinning = false; // 動畫結束，重置為未進行動畫
         }, 500); // 等待一段時間後再檢查中獎，確保使用者能看清最終結果
@@ -62,6 +89,12 @@ function checkWin(results) {
                                 for (let fifthRow = 0; fifthRow < numRows; fifthRow++) {
                                     const fifthSymbol = results[fifthRow * numCols + 4]; // 其他行的第五個格子
                                     if (fifthSymbol === firstSymbol) {
+                                        for (let sixthRow = 0; sixthRow < numRows; sixthRow++) {
+                                            const sixthSymbol = results[sixthRow * numCols + 5]; // 其他行的第六個格子
+                                            if (sixthSymbol === firstSymbol) {
+                                                winningIndexes.push(sixthRow * numCols + 5); // 加入中獎的第六格
+                                            }
+                                        }
                                         winningIndexes.push(fifthRow * numCols + 4); // 加入中獎的第五格
                                     }
                                 }
@@ -75,6 +108,12 @@ function checkWin(results) {
                 }
             }
         }
+    }
+
+    if (winningIndexes.length === 0) {
+        noWinSound.play();
+    } else {
+        winSound.play();
     }
 
     // 高亮中獎的格子
@@ -99,3 +138,4 @@ function clearWinningSlots() {
 
 const spinButton = document.getElementById('spinButton');
 spinButton.addEventListener('click', spin);
+
