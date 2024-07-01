@@ -1,0 +1,51 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #f0f0f0;
+}
+
+.slot-machine {
+    display: flex;
+    flex-direction: column; /* 确保每一排是竖直排列 */
+    align-items: center;
+}
+
+.row {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.slot {
+    width: 80px; /* 调整每个格子的宽度 */
+    height: 80px; /* 调整每个格子的高度 */
+    border: 1px solid black;
+    margin: 5px; /* 调整每个格子之间的间距 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px; /* 调整格子中内容的字体大小 */
+    transition: background-color 0.3s ease;
+}
+
+button {
+    font-size: 18px;
+    padding: 10px 20px;
+    margin-top: 20px;
+}
+
+.winning {
+    animation: blink 0.5s infinite alternate;
+}
+
+@keyframes blink {
+    from {
+        background-color: yellow;
+    }
+    to {
+        background-color: transparent;
+    }
+}
