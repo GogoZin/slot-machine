@@ -1,6 +1,9 @@
 const symbols = ['🍒', '🍋', '🍊', '🍇', '🔔', '💎'];
 const numRows = 4; // 總行數
 const numCols = 6; // 每行格子數
+var playerCoin = 0;
+var playerBet = 0;
+const coin = document.getElementById('coin');
 let spinning = false; // 控制是否正在進行動畫
 const noWinSound = new Audio('audio/loss.mp3');
 noWinSound.volume = 1;
@@ -15,14 +18,36 @@ document.getElementById('startButton').addEventListener('click', () => {
     document.getElementById('backgroundMusic').play();
 });
 
-function spin() {
+function bet() {
     if (spinning) {
+        return;
+    }
+    if (playerBet >= 1000) {
+        playerBet = 100;
+    } else {
+        playerBet += 100;
+    }
+    document.getElementById('bet').value = playerBet;
+}
+
+function charge() {
+    if (spinning) {
+        return;
+    }
+    playerCoin += 10000;
+    coin.value = playerCoin;
+}
+
+function spin() {
+    if (spinning || playerCoin === 0 || playerCoin < playerBet || playerBet === 0) {
         return; // 如果正在進行動畫，直接返回，避免重複觸發
     }
 
     noWinSound.pause(); // 停止
     noWinSound.currentTime = 0;
     spinSound.play();
+    var bet = document.getElementById('bet').value;
+    playerCoin -= bet;
 
     spinning = true; // 設置為正在進行動畫
 
@@ -60,6 +85,7 @@ function spin() {
             spinning = false; // 動畫結束，重置為未進行動畫
         }, 500); // 等待一段時間後再檢查中獎，確保使用者能看清最終結果
     }, 2000); // 2 秒後停止動畫，並顯示最終結果
+    coin.value = playerCoin;
 }
 
 function updateSlots(results) {
@@ -114,6 +140,12 @@ function checkWin(results) {
         noWinSound.play();
     } else {
         winSound.play();
+        var playerWin = (playerBet * winningIndexes.length);
+        document.getElementById('win').value = playerWin / 2;
+        playerCoin += playerWin / 2;
+        coin.value = playerCoin;
+        // const slotMachine = document.getElementById("slot-machine");
+        // slotMachine.classList.add('machineWinning');
     }
 
     // 高亮中獎的格子
@@ -127,15 +159,21 @@ function highlightWinningSlots(winningIndexes) {
             slot.classList.add('winning');
         }
     });
+
 }
 
 function clearWinningSlots() {
     const slots = document.querySelectorAll('.slot');
+    // const slotMachine = document.getElementById("slot-machine");
+    // slotMachine.classList.remove('machineWinning');
     slots.forEach(slot => {
         slot.classList.remove('winning');
     });
 }
 
 const spinButton = document.getElementById('spinButton');
+const betButton = document.getElementById('betButton');
+const chargeButton = document.getElementById('chargeButton');
 spinButton.addEventListener('click', spin);
-
+chargeButton.addEventListener('click', charge);
+betButton.addEventListener('click', bet);

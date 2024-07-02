@@ -1,54 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="zh-TW">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Slot Machine Game</title>
+    <title>H5水果老虎機</title>
     <link rel="stylesheet" href="styles.css">
 </head>
 <body>
     <div class="overlay" id="overlay">
         <button id="startButton">開始遊戲</button>
     </div>
-    <div class="slot-machine">
-        <h1 class="title">H5水果老虎機</h1>
-        <!-- 第一排 -->
-        <div class="row">
-            <div class="slot" id="slot1"></div>
-            <div class="slot" id="slot2"></div>
-            <div class="slot" id="slot3"></div>
-            <div class="slot" id="slot4"></div>
-            <div class="slot" id="slot5"></div>
-            <div class="slot" id="slot6"></div>
+    <h1 class="title">H5水果老虎機</h1>
+    <div class="container">
+        <div class="slot-btn">
+            <button id="chargeButton">儲值</button>
+            <button id="checkButton">倍率</button>
         </div>
-        <!-- 第二排 -->
-        <div class="row">
-            <div class="slot" id="slot7"></div>
-            <div class="slot" id="slot8"></div>
-            <div class="slot" id="slot9"></div>
-            <div class="slot" id="slot10"></div>
-            <div class="slot" id="slot11"></div>
-            <div class="slot" id="slot12"></div>
+        <div class="slot-machine" id="slot-machine">
+            
+            <!-- 第一排 -->
+            <div class="row">
+                <div class="slot" id="slot1"></div>
+                <div class="slot" id="slot2"></div>
+                <div class="slot" id="slot3"></div>
+                <div class="slot" id="slot4"></div>
+                <div class="slot" id="slot5"></div>
+                <div class="slot" id="slot6"></div>
+            </div>
+            <!-- 第二排 -->
+            <div class="row">
+                <div class="slot" id="slot7"></div>
+                <div class="slot" id="slot8"></div>
+                <div class="slot" id="slot9"></div>
+                <div class="slot" id="slot10"></div>
+                <div class="slot" id="slot11"></div>
+                <div class="slot" id="slot12"></div>
+            </div>
+            <!-- 第三排 -->
+            <div class="row">
+                <div class="slot" id="slot13"></div>
+                <div class="slot" id="slot14"></div>
+                <div class="slot" id="slot15"></div>
+                <div class="slot" id="slot16"></div>
+                <div class="slot" id="slot17"></div>
+                <div class="slot" id="slot18"></div>
+            </div>
+            <!-- 第四排 -->
+            <div class="row">
+                <div class="slot" id="slot19"></div>
+                <div class="slot" id="slot20"></div>
+                <div class="slot" id="slot21"></div>
+                <div class="slot" id="slot22"></div>
+                <div class="slot" id="slot23"></div>
+                <div class="slot" id="slot24"></div>
+            </div>
+
+            <div class="info-row">
+                <div class="coin displayInfo">
+                    <h5 class="info-title">剩餘點數</h5>
+                    <input type="number" id="coin" class="info-display" value=0 readonly>
+                </div>
+                <div class="bet displayInfo">
+                    <h5 class="info-title">下注</h5>
+                    <input type="number" id="bet" class="info-display" value=0 readonly>
+                </div>
+                <div class="win displayInfo">
+                    <h5 class="info-title">贏取</h5>
+                    <input type="number" id="win" class="info-display" value=0 readonly>
+                </div>
+            </div>
         </div>
-        <!-- 第三排 -->
-        <div class="row">
-            <div class="slot" id="slot13"></div>
-            <div class="slot" id="slot14"></div>
-            <div class="slot" id="slot15"></div>
-            <div class="slot" id="slot16"></div>
-            <div class="slot" id="slot17"></div>
-            <div class="slot" id="slot18"></div>
+        <div class="slot-btn">
+            <button id="spinButton">啟動</button>
+            <button id="betButton">下注</button>
         </div>
-        <!-- 第四排 -->
-        <div class="row">
-            <div class="slot" id="slot19"></div>
-            <div class="slot" id="slot20"></div>
-            <div class="slot" id="slot21"></div>
-            <div class="slot" id="slot22"></div>
-            <div class="slot" id="slot23"></div>
-            <div class="slot" id="slot24"></div>
-        </div>
-        <button id="spinButton">Spin</button>
     </div>
     <audio id="backgroundMusic" src="audio/casino-bg.mp3" loop></audio>
 
